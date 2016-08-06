@@ -1,0 +1,28 @@
+{% extends 'base_user.html' %}
+
+{% block main %}
+
+  <script>
+    // 针对首页的来打开相应的url
+    function openItem(url) {
+      if (url.length > 5) {
+        window.open(url, "_blank")
+      }
+    }
+  </script>
+
+  <div class="jumbotron" id="user-info-header">
+      <img class="img-circle" src="/static/images/user/1.jpg" width="100px">
+      <h2>{{ user_info.username }}</h2>
+      <p class="bio">{{ user_info.bio }}</p>
+      <p class="tags">擅长:{% for sk in user_info.user_skills %}#{{ sk.name }} {% endfor %}</p>
+      <p class="tags">关注:{% for int in user_info.user_interests %}#{{ int.name }} {% endfor %}</p>
+  </div>
+
+  <div class="container">
+    <a href="{% url 'user:update_bio' user.username %}">修改简介</a>
+    <a href="{% url 'user:update_skills' user.username %}">修改技能</a>
+    <a href="{% url 'user:update_interests' user.username %}">修改关注领域</a>
+  </div>
+
+{% endblock %}

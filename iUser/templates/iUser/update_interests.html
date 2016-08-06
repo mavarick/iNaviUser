@@ -1,0 +1,40 @@
+{% extends 'base_user.html' %}
+
+{% block main %}
+
+  <div class="container center-block">
+    <div class="vertical-center col-xs-12 col-sm-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            更新我的关注领域
+          </h3>
+        </div>
+        <div class="panel-body">
+
+          <form class="form-horizontal" method="post" action="{% url 'user:update_interests' user_info.username %}" style="">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="interests" class="col-xs-12 control-label">我关注的领域</label>
+              <div class="col-xs-12 ">
+                <input type="text" class="form-control" id="interests" name="interests" placeholder="逗号分隔" value="{{ interests }}">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-12">
+                <button type="submit" class="btn btn-default">提 交</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        {% if errors %}
+          {% for error in errors %}
+            <div><p class="bg-danger">{{ error }}</p></div>
+
+          {% endfor %}
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

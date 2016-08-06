@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  {#    <link rel="icon" href="../../favicon.ico">#}
+
+  <title>{% block site-name %}个性化导航{% endblock %}</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+
+  <link rel="stylesheet" href="/static/css/screen.css" media="screen"/>
+  <link rel="stylesheet" href="/static/css/jquery.treetable.css"/>
+  <link rel="stylesheet" href="/static/css/jquery.treetable.theme.default.css"/>
+
+  <link href="/static/css/dashboard.css" rel="stylesheet">
+  <link href="/static/css/app.css" rel="stylesheet">
+
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/jquery-ui.min.js"></script>
+
+<script src="/static/js/bootstrap.min.js"></script>
+  <script src="/static/js/jquery.treetable.js"></script>
+
+  <script src="/static/js/app.js"></script>
+  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+  <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+  {#    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>#}
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<!-- Static navbar -->
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+              aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only"><a href="{% url 'index:index' %}">Webook</a></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Webook</a>
+    </div>
+
+    <div id="navbar" class="navbar-collapse collapse" style="z-index: 1000">
+      <ul class="nav navbar-nav navbar-right dropdown">
+
+        {% if user.is_authenticated %}
+
+          {% ifequal user.username 'admin' %}
+            <li role="presentation" class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                操作 <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li role="presentation">
+                  <a role="menuitem" tabindex="-1" href="" data-toggle="modal" data-target="#drop_user_modal">删除用户</a>
+                </li>
+              </ul>
+            </li>
+          {% endifequal %}
+          <li class="active"><a class="btn btn-default" href="{% url 'user:add_url' user.username %}" >添加链接</a></li>
+          <li><a href="">消息T</a></li>
+          <li><a href="">提醒T</a></li>
+          <li role="presentation" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+              {{ user.username }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li role="presentation" class="divider">操作</li>
+              <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="">我的名片(todo</a>
+              </li>
+              <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="">个人设置(todo)</a>
+              </li>
+              <li role="presentation" class="divider"></li>
+              <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="{% url 'user:logout' %}">退出</a>
+              </li>
+            </ul>
+          </li>
+
+        {% else %}
+          <li><a href="{% url 'user:login' %}">登录</a></li>
+          <li><a href="{% url 'user:register' %}">注册</a></li>
+        {% endif %}
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+{% block content %}
+
+    user: {{ user }}
+    {% if user.is_authenticated %}
+      <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+    {% else %}
+      <p>Welcome, new user. Please log in.</p>
+    {% endif %}
+
+
+{% endblock %}
+
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+{#    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>#}
+</body>
+</html>

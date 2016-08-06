@@ -1,0 +1,29 @@
+{% extends 'base_user.html' %}
+
+{% block main %}
+
+  <div class="container">
+    <p>
+      {{ msg }} <br>
+    </p>
+    <div id="page-jump"></div>
+
+    <script type="text/javascript">
+      var url = "{% if next.url %}{{ next.url }}{% else %}/{% endif %}";
+      var obj = document.getElementById("page-jump");
+      var time = 3;
+      function setTimeClew() {
+        obj.innerHTML = (time--) + "秒后自动跳转，如果没有自动跳转，请 <a href=\"" + url + "\" target=\"_self\" >点击{{ next.name }}</a>"
+        if (time < 0) {
+          window.location.href = url;
+        } else {
+          setTimeout(setTimeClew, 1000);
+        }
+      }
+      setTimeClew();
+    </script>
+
+  </div>
+{% endblock %}
+
+

@@ -1,0 +1,39 @@
+{% extends 'base_user.html' %}
+
+{% block main %}
+
+  <div>
+    <h3><a href="{% url 'user:show_topics' user.username %}">收藏目录:</a>  </h3>
+    <h4>
+      {% for node in topic_path %}
+
+      <a href="{% url 'user:show_topic' user.username node.child_id %}">{{ node.name }}</a> >>
+    {% endfor %}
+    </h4>
+  </div>
+
+  <div class="directory">
+    <ul class="list-group">
+    {% for url in topic_urls %}
+      <li class="list-group-item">
+      <a href="{{ url.url_info.url }}">{% if url.name %}{{ url.name }}{% else %}{{ url.url_info.url }}{% endif %}</a>
+  <span class="small">{{ url.last_update_time }}</span>
+        <div style="display:inline-block; float: right;">
+            <a href="{% url 'user:update_url' user.username url.id %}">修改</a>
+            <a href="{% url 'user:delete_url' user.username url.id %}">删除</a>
+        </div>
+      </li>
+    {% endfor %}
+      {% for topic in sub_topics %}
+        <li class="list-group-item folder">
+          <a href="{% url 'user:show_topic' user.username topic.child_id %}">{{ topic.name }}<a>
+          <div style="display:inline-block; float: right;">
+            <a href="{% url 'user:update_topic' user.username topic.child_id %}">修改</a>
+            <a href="{% url 'user:delete_topic' user.username topic.child_id %}">删除</a>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+{% endblock %}

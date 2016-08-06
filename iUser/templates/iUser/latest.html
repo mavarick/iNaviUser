@@ -1,0 +1,17 @@
+{% extends 'base_user.html' %}
+
+{% block main %}
+
+  <h3>最近收藏</h3>
+  <hr>
+  <ul class="list-group">
+  {% for url in user_urls %}
+  <li class="list-group-item">
+    <a href="{{ url.url_info.url }}">{% if url.name %}{{ url.name }}{% else %}{{ url.url_info.url }}{% endif %}</a>
+  <span class="small">{{ url.last_update_time }}</span>
+  </li>
+  {% endfor %}
+
+  </ul>
+
+{% endblock %}

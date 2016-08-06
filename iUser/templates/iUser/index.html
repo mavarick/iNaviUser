@@ -1,0 +1,42 @@
+{% extends 'base_user.html' %}
+
+{% block main %}
+
+    <h4 class="page-header main-page-title">我的常用导航</h4>
+  <div class="main-site">
+    <div class="">
+      <ul class="site_urls_list">
+        {% for url in site_tree.user_url_infos %}
+          <li class=""><a href="{{ url.url_info.url }}" title="{{ url.url_info.url }} | {{ url.url_info.abstract }}"
+                 target="_blank">
+            {% if url.name %}{{ url.name }}{% else %}{{ url.url_info.url|truncatechars:20 }}{% endif %}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    {% for sub_tree in site_tree.sub %}
+      <hr>
+      <ul class="site_urls_list">
+        <li><span class="sub-title">{{ sub_tree.name }}:</span></li>
+        {% for url in sub_tree.user_url_infos %}
+          <li><a href="{{ url.url_info.url }}" title="{{ url.url_info.url }} | {{ url.url_info.abstract }}"
+                 target="_blank">
+            {% if url.name %}{{ url.name }}{% else %}{{ url.url_info.url|truncatechars:20 }}{% endif %}</a></li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  </div>
+
+  <h4 class="page-header main-page-title">我的最近收藏</h4>
+  <div class="main-recent">
+    <ul class="">
+      {% for url in user_recent_urls %}
+        <li class="list-group-item">
+          <a href="{{ url.url_info.url }}" title="{{ url.url_info.url }} | {{ url.url_info.abstract }}" target="_blank">
+            {% if url.name %}{{ url.name }}{% else %}{{ url.url_info.url }}{% endif %}</a>
+          <span class="small right">{{ url.last_update_time }}</span>
+        </li>
+      {% endfor %}
+  </div>
+
+{% endblock %}

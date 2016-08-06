@@ -1,0 +1,70 @@
+{% extends 'base_user.html' %}
+
+{% block main %}
+
+  <div>
+    <h4>
+      收藏目录 >
+    </h4>
+    <a class="btn btn-primary" href="{% url 'user:add_topic' user.username %}">添加分类</a>
+  </div>
+
+  <table id="topic-table">
+    <tbody>
+    {{ topics|safe }}
+    </tbody>
+  </table>
+
+      <script>
+
+      $("#topic-table").treetable({expandable: true, clickableNodeNames: false, indent: 15, initialState: "expanded"});
+      {#    $("#topic-table").treetable({expandable: true, indent: 15, initialState: "expanded"});#}
+
+      // Highlight selected row
+      $("#topic-table tbody").on("mousedown", "tr", function () {
+        $(".selected").not(this).removeClass("selected");
+        $(this).toggleClass("selected");
+      });
+
+      // Drag & Drop Example Code
+      $("#topic-table .file, #topic-table .folder").draggable({
+        helper: "clone",
+        opacity: .75,
+        refreshPositions: true, // Performance?
+        revert: "invalid",
+        revertDuration: 300,
+        scroll: true
+      });
+
+      $("#topic-table .folder").each(function () {
+        $(this).parents("#topic-table tr").droppable({
+          accept: ".file, .folder",
+          drop: function (e, ui) {
+            var droppedEl = ui.draggable.parents("tr");
+            $("#topic-table").treetable("move", droppedEl.data("ttId"), $(this).data("ttId"));
+          },
+          hoverClass: "accept",
+          over: function (e, ui) {
+            var droppedEl = ui.draggable.parents("tr");
+            if (this != droppedEl[0] && !$(this).is(".expanded")) {
+              $("#topic-table").treetable("expandNode", $(this).data("ttId"));
+            }
+          }
+        });
+      });
+
+      $("form#reveal").submit(function () {
+        var nodeId = $("#revealNodeId").val()
+
+        try {
+          $("#topic-table").treetable("reveal", nodeId);
+        }
+        catch (error) {
+          alert(error.message);
+        }
+
+        return false;
+      });
+
+  </script>
+{% endblock %}
