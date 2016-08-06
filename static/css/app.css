@@ -1,5 +1,5 @@
 body {
-    background: #f0f0f0;
+    background: white;
     line-height: 20px;
 }
 
@@ -24,7 +24,7 @@ body {
 }
 
 .main{
-    background-color: white;
+    /*background-color: white;*/
 }
 
 .nav-sidebar>li{
@@ -98,4 +98,17 @@ body {
 #user-info-header .tags{
     font-size: 14px;
     font-weight: 400;
+}
+#sidebar-wrapper{
+    border-right: 1px solid #eee;
+}
+#menu-toggle{
+    /*position: fixed;*/
+    /*left: 0px;*/
+    /*bottom: 20px;*/
+    /*z-index: 10000;*/
+}
+.main-page-title{
+    padding: 5px;
+    margin-top: 15px;
 }

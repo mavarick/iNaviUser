@@ -71,6 +71,7 @@
               <li><a href="{% url 'user:upload_bookmark' user.username %}">导入收藏夹</a></li>
               <li><a href="{% url 'user:collect' user.username %}">收集工具(todo)</a></li>
               <li><a href="{% url 'user:suggest' %}">建议&反馈</a></li>
+              <li style="line-height: 30px"><span>上下知识@2006</span></li>
             </ul>
           {% else %}
 
@@ -87,7 +88,7 @@
     </div>
 
     <div id="page-content-wrapper">
-      <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Menu</a>
+      <a href="#menu-toggle" class="btn btn-default glyphicon glyphicon-th" id="menu-toggle"></a>
       {% block main %}
         <h2>The base User template</h2>
       {% endblock %}
