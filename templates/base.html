@@ -12,22 +12,30 @@
   <title>{% block site-name %}个性化导航{% endblock %}</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+{#  <link href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" rel="stylesheet">#}
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
 
+  {#  http://www.bootcdn.cn/jquery-treetable/#}
   <link rel="stylesheet" href="/static/css/screen.css" media="screen"/>
-  <link rel="stylesheet" href="/static/css/jquery.treetable.css"/>
-  <link rel="stylesheet" href="/static/css/jquery.treetable.theme.default.css"/>
+{#    <link rel="stylesheet" href="/static/css/jquery.treetable.css"/>#}
+  <link href="//cdn.bootcss.com/jquery-treetable/3.2.0/css/jquery.treetable.min.css" rel="stylesheet">
+{#  <link href="//cdn.bootcss.com/jquery-treetable/3.2.0/css/jquery.treetable.theme.default.css" rel="stylesheet">#}
+    <link rel="stylesheet" href="/static/css/jquery.treetable.theme.default.css"/>
 
   <link href="/static/css/dashboard.css" rel="stylesheet">
   <link href="/static/css/app.css" rel="stylesheet">
 
-  <script src="/static/js/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+{#  <script src="/static/js/jquery.min.js"></script>#}
   <script src="/static/js/jquery-ui.min.js"></script>
 
-<script src="/static/js/bootstrap.min.js"></script>
-  <script src="/static/js/jquery.treetable.js"></script>
+  <script src="//cdn.bootcss.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js"></script>
+{#  <script src="/static/js/bootstrap.min.js"></script>#}
+
+  <script src="//cdn.bootcss.com/jquery-treetable/3.2.0/jquery.treetable.min.js"></script>
+{#    <script src="/static/js/jquery.treetable.js"></script>#}
 
   <script src="/static/js/app.js"></script>
   <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -75,7 +83,7 @@
               </ul>
             </li>
           {% endifequal %}
-          <li class="active"><a class="btn btn-default" href="{% url 'user:add_url' user.username %}" >添加链接</a></li>
+          <li class="active"><a class="btn btn-default" href="{% url 'user:add_url' user.username %}">添加链接</a></li>
           <li><a href="">消息T</a></li>
           <li><a href="">提醒T</a></li>
           <li role="presentation" class="dropdown">
@@ -109,12 +117,12 @@
 
 {% block content %}
 
-    user: {{ user }}
-    {% if user.is_authenticated %}
-      <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
-    {% else %}
-      <p>Welcome, new user. Please log in.</p>
-    {% endif %}
+  user: {{ user }}
+  {% if user.is_authenticated %}
+    <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+  {% else %}
+    <p>Welcome, new user. Please log in.</p>
+  {% endif %}
 
 
 {% endblock %}
