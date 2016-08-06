@@ -24,3 +24,19 @@ def api_get_cate_topics(request):
     topic_tree = topic_api.get_children_tree(username, topic_id)
     data['data'] = topic_tree
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+from get_head import get_url_title
+@login_required(login_url="/home/login/")
+def api_get_head(request):
+    data = copy.copy(return_data)
+    try:
+        url = get_request_field(request, "url", must=True)
+        content = get_url_title(url)
+        data['data'] = content
+    except Exception, ex:
+        data['code'] = -1
+        data['msg'] = ex.message
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+

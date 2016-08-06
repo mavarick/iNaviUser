@@ -19,7 +19,7 @@ from django.contrib import admin
 from views import main, login, register, logout, page_info, drop_user, update_bio, update_skills, update_interests
 
 from views_topic import show_topic, show_topics, update_topic, delete_topic, add_topic
-from views_api import api_get_cate_topics
+from views_api import api_get_cate_topics, api_get_head
 from views_url import add_url, show_urls, update_url, delete_url, upload_bookmark, collect, suggest
 
 urlpatterns = [
@@ -51,5 +51,6 @@ urlpatterns = [
 
 
     # apis
-    url(r"api/get_cate_topics/?", api_get_cate_topics, name="get_cate_topics")
+    url(r"api/get_cate_topics/?", api_get_cate_topics, name="get_cate_topics"),
+    url(r"api/api_get_head/?", api_get_head, name="api_get_head")
 ]
