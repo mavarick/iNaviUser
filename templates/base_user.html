@@ -1,94 +1,103 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
+
+  <div id="main-wrapper">
+    <div id="sidebar-wrapper">
       {% block sidebar %}
-        <div class="nav nav-sidebar">
-        <div class="panel">
+        <div class="nav nav-sidebar sidebar-nav">
+          <div class="panel">
 
-          {#              登录信息#}
-          {% if user.is_authenticated %}
-            <div class="user-logo">
-              <img class="img-circle" src="/static/images/user/1.jpg" width="80px">
-              <h3>{{ user_info.username }}</h3>
-              <p>{{ user_info.bio }}</p>
-            </div>
-          {% else %}
-            <div class="panel-heading">
-              <h3 class="panel-title text-center">
-                登录
-              </h3>
-            </div>
-            <div class="panel-body">
+            {#              登录信息#}
+            {% if user.is_authenticated %}
+              <div class="user-logo">
+                <img class="img-circle" src="/static/images/user/1.jpg" width="80px">
+                <h3>{{ user_info.username }}</h3>
+                <p>{{ user_info.bio }}</p>
+              </div>
+            {% else %}
+              <div class="panel-heading">
+                <h3 class="panel-title text-center">
+                  登录
+                </h3>
+              </div>
+              <div class="panel-body">
 
-              <form class="form-horizontal" method="post" action="{% url 'user:login' %}" style="">
-                {% csrf_token %}
-                <div class="form-group">
-                  <div class="col-xs-12">
-                    <input type="text" class="form-control" id="username" name="username" placeholder="用户名或Email">
+                <form class="form-horizontal" method="post" action="{% url 'user:login' %}" style="">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <div class="col-xs-12">
+                      <input type="text" class="form-control" id="username" name="username" placeholder="用户名或Email">
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-xs-12">
-                    <input type="password" class="form-control" id="password" name="password"
-                           placeholder="Password">
+                  <div class="form-group">
+                    <div class="col-xs-12">
+                      <input type="password" class="form-control" id="password" name="password"
+                             placeholder="Password">
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-xs-12">
-                    <button type="submit" class="btn btn-primary col-xs-12">登 录</button>
-                    没有账号?
-                    <a type="btn" class="btn btn-default" href="{% url "user:register" %}">注 册</a>
+                  <div class="form-group">
+                    <div class="col-xs-12">
+                      <button type="submit" class="btn btn-primary col-xs-12">登 录</button>
+                      没有账号?
+                      <a type="btn" class="btn btn-default" href="{% url "user:register" %}">注 册</a>
+                    </div>
                   </div>
-                </div>
-              </form>
-            </div>
-            {% if errors %}
-              {% for error in errors %}
-                <div><p class="bg-danger">{{ error }}</p></div>
-              {% endfor %}
+                </form>
+              </div>
+              {% if errors %}
+                {% for error in errors %}
+                  <div><p class="bg-danger">{{ error }}</p></div>
+                {% endfor %}
+              {% endif %}
+
             {% endif %}
+          </div>
 
+          {#          菜单信息#}
+          {% if user.is_authenticated %}
+            <ul class="nav nav-sidebar">
+              <li><a href="{% url 'user:main' user.username %}">我的主页</a></li>
+              <li><a href="{% url 'user:latest' user.username %}">最新收藏</a></li>
+              <li><a href="{% url 'user:show_topics' user.username %}">收藏目录</a>
+
+              </li>
+              <li><a href="">我的知识夹(todo)</a></li>
+              <li><a href="">我的关注(todo)</a></li>
+              <li><a href="{% url 'user:info' user.username %}">个人信息</a></li>
+            </ul>
+            <hr>
+            <ul class="nav nav-sidebar">
+              <li><a href="{% url 'user:upload_bookmark' user.username %}">导入收藏夹</a></li>
+              <li><a href="{% url 'user:collect' user.username %}">收集工具(todo)</a></li>
+              <li><a href="{% url 'user:suggest' %}">建议&反馈</a></li>
+            </ul>
+          {% else %}
+
+            <ul class="nav nav-sidebar">
+              <li><a href="">WELCOME</a></li>
+              <li><a href="">首页</a></li>
+              <li><a href="">最新用户(todo)</a></li>
+              <li><a href="">功能说明(todo)</a></li>
+            </ul>
           {% endif %}
+
         </div>
-
-        {#          菜单信息#}
-        {% if user.is_authenticated %}
-          <ul class="nav nav-sidebar">
-            <li><a href="{% url 'user:main' user.username %}">我的主页</a></li>
-            <li><a href="{% url 'user:latest' user.username %}">最新收藏</a></li>
-            <li><a href="{% url 'user:show_topics' user.username %}">收藏目录</a>
-
-            </li>
-            <li><a href="">我的知识夹(todo)</a></li>
-            <li><a href="">我的关注(todo)</a></li>
-            <li><a href="{% url 'user:info' user.username %}">个人信息</a></li>
-          </ul>
-          <hr>
-          <ul class="nav nav-sidebar">
-            <li><a href="{% url 'user:upload_bookmark' user.username %}">导入收藏夹</a></li>
-            <li><a href="{% url 'user:collect' user.username %}">收集工具(todo)</a></li>
-            <li><a href="{% url 'user:suggest' %}">建议&反馈</a></li>
-          </ul>
-        {% else %}
-
-          <ul class="nav nav-sidebar">
-            <li><a href="">WELCOME</a></li>
-            <li><a href="">首页</a></li>
-            <li><a href="">最新用户(todo)</a></li>
-            <li><a href="">功能说明(todo)</a></li>
-          </ul>
-        {% endif %}
       {% endblock %}
-      </div>
     </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+    <div id="page-content-wrapper">
+      <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Menu</a>
       {% block main %}
         <h2>The base User template</h2>
       {% endblock %}
     </div>
   </div>
+  <script>
+    $("#menu-toggle").click(function (e) {
+      e.preventDefault();
+      $("#main-wrapper").toggleClass("toggled");
+    });
+  </script>
 
 {% endblock %}
