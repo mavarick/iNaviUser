@@ -335,5 +335,3 @@ def _wrap_user_site_urls(sub_topics_urls):
         html.append('</li>')
     return html
 
-
-

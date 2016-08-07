@@ -102,13 +102,10 @@ body {
 #sidebar-wrapper{
     border-right: 1px solid #eee;
 }
-#menu-toggle{
-    /*position: fixed;*/
-    /*left: 0px;*/
-    /*bottom: 20px;*/
-    /*z-index: 10000;*/
-}
 .main-page-title{
     padding: 5px;
     margin-top: 15px;
+}
+.padding-left-tag{
+    padding-left: 10px;
 }

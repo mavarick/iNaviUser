@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import BaseUserManager
 from django import forms
+from utils.tools import dt_format
 
 # from models_url import UserUrl
 from config import MAX_USERNAME_LENGTH
@@ -18,11 +19,17 @@ class UserInfo(models.Model):
     username = models.CharField(max_length=MAX_USERNAME_LENGTH, primary_key=True)
     bio = models.CharField(max_length=200, default="写上你的格言, 也许会激励很多人")
 
+    status = models.IntegerField(default=0)
+    last_update_time = models.DateTimeField(auto_now=True)
+    create_time = models.DateTimeField(auto_now_add=True)
+
     class Meta:
         db_table = "user_info"
 
     def get_info(self):
-        data = dict(username=self.username, bio=self.bio)
+        data = dict(username=self.username, bio=self.bio,
+                    status=self.status, last_update_time=dt_format(self.last_update_time),
+                    create_time=dt_format(self.create_time))
         return data
 
 
@@ -119,6 +126,11 @@ class UserInfoApi(object):
         self.user_info.objects.filter(username=username).delete()
         self.user_skill.objects.filter(username=username).delete()
         self.user_interest.objects.filter(username=username).delete()
+
+    def get_recent_users(self, size=10):
+        users = self.user_info.objects.order_by("-create_time")[0:size]
+        user_infos = [self.get_info(t.username) for t in users]
+        return user_infos
 
 
 user_info_api = UserInfoApi(UserInfo, UserSkill, UserInterest)

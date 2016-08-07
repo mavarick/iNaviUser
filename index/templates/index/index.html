@@ -1,7 +1,36 @@
 {% extends 'base_user.html' %}
 
 {% block main %}
-  <h2>WELCOME TO Weweb</h2>
+  <h2>WELCOME TO Webook</h2>
 
-  <p>the index page, to fill!</p>
+  <h4 class="page-header main-page-title">最新收藏</h4>
+  <div class="main-recent">
+    <ul class="">
+      {% for url in urls %}
+        <li class="list-group-item">
+          <a href="{{ url.url_info.url }}" title="{{ url.url_info.url }} | {{ url.url_info.abstract }}" target="_blank">
+            {% if url.name %}{{ url.name }}{% else %}{{ url.url_info.url }}{% endif %}</a>
+          <span class="small padding-left-tag">by <a href="{% url 'user:main' url.username %}">{{ url.username }}</a></span>
+          <span class="small right">{{ url.last_update_time }}</span>
+        </li>
+      {% endfor %}
+  </div>
+
+  <h4 class="page-header main-page-title">最新用户</h4>
+    <div class="main-recent">
+    <ul class="">
+      {% for user in users %}
+        <li class="list-group-item">
+          <a href="{% url 'user:main' user.username %}" title="{{ user.bio }}">{{ user.username }}</a>
+          <span class="small padding-left-tag">{{ user.bio }}</span>
+          <span class="small padding-left-tag">擅长:
+            {% for tag in user.user_skills %}
+              #{{ tag.name }}
+              {% endfor %}
+          </span>
+
+          <span class="small right">{{ user.create_time }}</span>
+        </li>
+      {% endfor %}
+
 {% endblock %}

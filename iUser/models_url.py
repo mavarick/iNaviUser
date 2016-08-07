@@ -217,11 +217,17 @@ class UserUrlApi(object):
         return url_infos
 
     # 获得最近添加的urls
-    def get_recent_urls(self, username, size=10):
+    def get_recent_urls(self, username=None, size=10):
         if size:
-            results = self.model.objects.filter(username=username).order_by("-last_update_time")[0:size]
+            if username:
+                results = self.model.objects.filter(username=username).order_by("-last_update_time")[0:size]
+            else:
+                results = self.model.objects.order_by("-last_update_time")[0:size]
         else:
-            results = self.model.objects.filter(username=username).order_by("-last_update_time").all()
+            if username:
+                results = self.model.objects.filter(username=username).order_by("-last_update_time").all()
+            else:
+                results = self.model.objects.order_by("-last_update_time").all()
         return [self.get(t.id) for t in results]
 
     # 用来给find板块设计的功能
@@ -332,6 +338,11 @@ class UserUrlApi(object):
         root_id = self.topic_api.get_root_id(username)
         _load_bookmark_tree(bookmark_tree, root_id, username)
 
+
+
+class SiteApi(object):
+    def __init__(self, user_url_model):
+        self.model = user_url_model
 
 
 # def wrap_topics_tree(tree):
