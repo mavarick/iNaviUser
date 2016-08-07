@@ -17,7 +17,7 @@ from models_url import user_url_api
 from user_tools import get_user_info
 
 # 显示改目录下的收藏内容和子文件夹
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def show_topic(request, username, topic_id):
     user_info = user_info_api.get_info(username)
     topic_path = topic_api.get_topic_path(username, topic_id)
@@ -31,7 +31,7 @@ def show_topic(request, username, topic_id):
 
 
 # 显示改目录下的收藏内容和子文件夹
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def show_topics(request, username):
     user_info = user_info_api.get_info(username)
     template_file = "iUser/show_topics.html"
@@ -43,7 +43,7 @@ def show_topics(request, username):
 
 
 # 显示改目录下的收藏内容和子文件夹
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def update_topic(request, username, topic_id):
     user_info = user_info_api.get_info(username)
     if request.method == 'POST':
@@ -71,7 +71,7 @@ def update_topic(request, username, topic_id):
 
 
 # 显示改目录下的收藏内容和子文件夹
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def delete_topic(request, username, topic_id):
     user_topic_info = topic_api.get(username, topic_id)
     parent_id = user_topic_info['parent_id']
@@ -81,7 +81,7 @@ def delete_topic(request, username, topic_id):
 
 
 # 显示改目录下的收藏内容和子文件夹
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def add_topic(request, username):
     user_info = user_info_api.get_info(username)
     if request.method == 'POST':

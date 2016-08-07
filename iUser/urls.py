@@ -21,6 +21,7 @@ from views import main, login, register, logout, page_info, drop_user, update_bi
 from views_topic import show_topic, show_topics, update_topic, delete_topic, add_topic
 from views_api import api_get_cate_topics, api_get_head
 from views_url import add_url, show_urls, update_url, delete_url, upload_bookmark, collect, suggest
+from views_note import add_note, show_note
 
 urlpatterns = [
     url(r'^login/?$', login, name="login"),
@@ -49,6 +50,8 @@ urlpatterns = [
     url(r'^(?P<username>\w+)/bookmark/?$', upload_bookmark, name="upload_bookmark"),
     url(r'^(?P<username>\w+)/collect/?$', collect, name="collect"),
 
+    url(r'^(?P<username>\w+)/add_note/?$', add_note, name="add_note"),
+    url(r'^(?P<username>\w+)/show_note/?$', show_note, name="show_note"),
 
     # apis
     url(r"api/get_cate_topics/?", api_get_cate_topics, name="get_cate_topics"),

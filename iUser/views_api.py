@@ -14,7 +14,7 @@ from tools import get_request_field
 from config import return_data
 
 
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def api_get_cate_topics(request):
     # 获得一个用户下的某一个面板的所有的topics
     data = copy.copy(return_data)
@@ -27,7 +27,7 @@ def api_get_cate_topics(request):
 
 
 from get_head import get_url_title
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def api_get_head(request):
     data = copy.copy(return_data)
     try:

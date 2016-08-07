@@ -86,7 +86,8 @@
             </li>
           {% endifequal %}
           <li class="active"><a class="btn btn-default" href="{% url 'user:add_url' user.username %}">添加链接</a></li>
-          <li><a href="">消息T</a></li>
+          <li class="active"><a class="btn btn-default" href="{% url 'user:add_note' user.username %}">添加笔记</a></li>
+{#          <li><a href="">消息T</a></li>#}
           <li><a href="">提醒T</a></li>
           <li role="presentation" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">

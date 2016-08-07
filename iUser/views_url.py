@@ -15,7 +15,7 @@ from models_url import user_url_api, topic_api
 from models import user_info_api
 
 
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def show_urls(request, username):
     template_file = "iUser/latest.html"
     user_info = user_info_api.get_info(username)
@@ -40,7 +40,7 @@ def find(request):
     return render(request, template_file, {"user_info": user_info, "user_urls": user_urls})
 
 
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def follow(request):
     from views_topic import wrap_topics_treetable
     template_file = "iUser/follow.html"
@@ -49,7 +49,7 @@ def follow(request):
     return render(request, template_file, {"follows": follows, "user_urls": user_urls})
 
 
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def show_user_info(request):
     from views_topic import wrap_topics_treetable
     template_file = "iUser/user_info.html"
@@ -58,7 +58,7 @@ def show_user_info(request):
 
 class FileForm(forms.Form):
     bookmark = forms.FileField()
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def upload_bookmark(request, username):
     from views_topic import wrap_topics_treetable
     template_file = "iUser/upload_bookmark.html"
@@ -78,7 +78,7 @@ def upload_bookmark(request, username):
     return render(request, template_file, {"user_info": user_info})
 
 
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def collect(request, username):
     from views_topic import wrap_topics_treetable
     template_file = "iUser/collect.html"
@@ -107,7 +107,7 @@ def suggest(request):
     return render(request, template_file, {"user_info": user_info})
 
 
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def add_url(request, username):
     template_file = "iUser/add_url.html"
     user_info = user_info_api.get_info(username)
@@ -141,7 +141,7 @@ def add_url(request, username):
     return render(request, template_file, {"user_info": user_info, "user_topics":user_topic_select})
 
 
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def update_url(request, username, user_url_id):
     template_file = "iUser/update_user_url.html"
     user_info = user_info_api.get_info(username)
@@ -177,7 +177,7 @@ def update_url(request, username, user_url_id):
                                            "tags": tags, "next": next, "user_topics": user_topic_select})
 
 
-@login_required(login_url="/home/login/")
+@login_required(login_url="/user/login/")
 def delete_url(request, username, user_url_id):
     user_info = user_info_api.get_info(username)
     username = user_info['username']

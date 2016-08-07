@@ -1,0 +1,24 @@
+{% extends 'base_user.html' %}
+
+{% block main %}
+
+    <h4 class="page-header main-page-title">我的笔记</h4>
+  <div class="main-recent">
+    <ul class="">
+      {% for note in notes %}
+        <li class="list-group-item">
+          <span class="sequence">{{ forloop.counter }}</span> {{ note.info }}
+          <span class="small padding-left-tag">by <a href="{% url 'user:main' note.username %}">{{ note.username }}</a></span>
+          <span class="small right">{{ note.last_update_time }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  <ul class="pagination">
+  {% for page in page_info %}
+          <li class="{% if page.2 %}active{% endif %}"><a href="{{ page.1 }}">{{ page.0 }}</a></li>
+      {% endfor %}
+   <li><a href="#">共{{ count }}条</a></li>
+</ul>
+  </div>
+
+{% endblock %}
