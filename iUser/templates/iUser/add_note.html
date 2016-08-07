@@ -3,7 +3,7 @@
 {% block main %}
 
   <div class="container center-block">
-    <div class="vertical-center col-xs-12 col-sm-12">
+    <div class="vertical-center col-xs-12 col-sm-12 padding-no">
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">
@@ -15,7 +15,7 @@
           <form class="form-horizontal" method="post" action="{% url 'user:add_note' user_info.username %}" style="">
             {% csrf_token %}
             <div class="form-group">
-              <div class="col-xs-12">
+              <div class="col-xs-12 padding-1px">
                 <textarea id="note-info-textarea" style="width: 100%;" name="info" placeholder="添加笔记"></textarea>
 
               </div>
