@@ -13,20 +13,28 @@ from utils.bookmark import parse_bookmark
 
 from models_url import user_url_api, topic_api
 from models import user_info_api
+from utils.pages import wrap_pages
 
 
 @login_required(login_url="/user/login/")
 def show_urls(request, username):
     template_file = "iUser/latest.html"
     user_info = user_info_api.get_info(username)
-    size = get_request_field(request, "size", must=False, default=20)
+    size = get_request_field(request, "size", must=False, default=10)
+    page = get_request_field(request, "page", must=False, default=1)
     size = int(size)
+    page = int(page)
     username = user_info['username']
 
     # 最近收藏
-    user_urls = user_url_api.get_recent_urls(username, size=size)
+    user_urls = user_url_api.get_urls(username, size=size, page=page)
+    cnt = user_url_api.get_urls_count(username)
+    page_url = reverse("user:latest", args=(username, ))
+    page_url = "{0}?page=%s&size={1}".format(page_url, size)
+    page_info = wrap_pages(page_url, cnt=cnt, size=size, cur=page, span=10)
 
-    return render(request, template_file, {"user_info": user_info, "user_urls": user_urls})
+    return render(request, template_file, {"user_info": user_info, "user_urls": user_urls, "count": cnt,
+                                           "page_info": page_info})
 
 
 # @login_required(login_url="/home/login/")

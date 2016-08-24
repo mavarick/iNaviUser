@@ -10,14 +10,25 @@
         <li class="list-group-item">
           <a href="{{ url.url_info.url }}" title="{{ url.url_info.url }} | {{ url.url_info.abstract }}" target="_blank">
             {% if url.name %}{{ url.name }}{% else %}{{ url.url_info.url }}{% endif %}</a>
-          <span class="small padding-left-tag">by <a href="{% url 'user:main' url.username %}">{{ url.username }}</a></span>
+          <span class="small padding-left-tag">by <a
+                  href="{% url 'user:main' url.username %}">{{ url.username }}</a></span>
           <span class="small right">{{ url.last_update_time }}</span>
         </li>
       {% endfor %}
+    </ul>
+    <div style="text-align: center">
+      <ul class="pagination margin-top-down-0">
+        {% for page in page_info %}
+          <li class="{% if page.2 %}active{% endif %}"><a href="{{ page.1 }}">{{ page.0 }}</a></li>
+        {% endfor %}
+        <li><a href="#">共{{ count }}条</a></li>
+      </ul>
+    </div>
+
   </div>
 
   <h4 class="page-header main-page-title">最新用户</h4>
-    <div class="main-recent">
+  <div class="main-recent">
     <ul class="">
       {% for user in users %}
         <li class="list-group-item">
@@ -26,7 +37,7 @@
           <span class="small padding-left-tag">擅长:
             {% for tag in user.user_skills %}
               #{{ tag.name }}
-              {% endfor %}
+            {% endfor %}
           </span>
 
           <span class="small right">{{ user.create_time }}</span>

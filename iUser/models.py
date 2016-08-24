@@ -127,7 +127,7 @@ class UserInfoApi(object):
         self.user_skill.objects.filter(username=username).delete()
         self.user_interest.objects.filter(username=username).delete()
 
-    def get_recent_users(self, size=10):
+    def get_recent_users(self, size=10, page=1):
         users = self.user_info.objects.order_by("-create_time")[0:size]
         user_infos = [self.get_info(t.username) for t in users]
         return user_infos

@@ -14,13 +14,13 @@ def wrap_pages(path, cnt, size, cur, span=10):
     tags = []
     max_page = int(math.ceil(cnt*1.0/size))
     sp, ep = cur - span/2, cur + span/2
-    pages = xrange(sp, ep)
+    offset = 0
     if sp < 1:
-        left_offset = 1 - sp
-        pages = [t+left_offset for t in pages]
-    end = pages[-1]
-    if end > max_page:
-        pages = filter(lambda x: x <= max_page, pages)
+        offset = 1 - sp
+        sp = 1
+    ep = offset + ep
+    if ep > max_page: ep = max_page
+    pages = xrange(sp, ep)
 
     # add the first
     cur_flag = 0

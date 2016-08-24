@@ -217,18 +217,31 @@ class UserUrlApi(object):
         return url_infos
 
     # 获得最近添加的urls
-    def get_recent_urls(self, username=None, size=10):
+    def get_recent_urls(self, username=None, size=10, page=1):
+        if not page: page = 1
+        if not size: size = 10
+        st, et = (page-1)*size, page*size
         if size:
             if username:
-                results = self.model.objects.filter(username=username).order_by("-last_update_time")[0:size]
+                results = self.model.objects.filter(username=username).order_by("-last_update_time")[st:et]
             else:
-                results = self.model.objects.order_by("-last_update_time")[0:size]
+                results = self.model.objects.order_by("-last_update_time")[st:et]
         else:
             if username:
                 results = self.model.objects.filter(username=username).order_by("-last_update_time").all()
             else:
                 results = self.model.objects.order_by("-last_update_time").all()
         return [self.get(t.id) for t in results]
+
+    def get_urls(self, username=None, size=10, page=1):
+        return self.get_recent_urls(username=username, size=size, page=page)
+
+    def get_urls_count(self, username=None):
+        if username:
+            cnt = self.model.objects.filter(username=username).count()
+        else:
+            cnt = self.model.objects.count()
+        return cnt
 
     # 用来给find板块设计的功能
     def get_find_urls(self, size=30):

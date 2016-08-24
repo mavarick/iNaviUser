@@ -14,6 +14,7 @@ from iUser.models import user_info_api
 from utils.tag_handler import TagHandler
 from iUserTopic.models import topic_api
 from models_url import user_url_api
+from utils.pages import wrap_pages
 
 def register(request):
     cur_time = timezone.now()
@@ -140,8 +141,7 @@ def main(request, username):
     user_info = user_info_api.get_info(username)
 
     # 最近收藏
-    user_recent_urls = user_url_api.get_recent_urls(username, size=10)
-
+    user_recent_urls = user_url_api.get_recent_urls(username, size=10, page=1)
     template_file = "iUser/index.html"
 
     return render(request, template_file, {"user_info": user_info, "id": id,

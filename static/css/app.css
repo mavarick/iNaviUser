@@ -115,7 +115,7 @@ body {
     font-size: 12px;
 }
 #note-info-textarea{
-    height: 200px;
+    height: 120px;
     padding: 0px;
 }
 .padding-1px{
@@ -123,4 +123,8 @@ body {
 }
 .padding-no{
     padding: 0px;
+}
+.margin-top-down-0{
+    margin-top:0px;
+    margin-bottom:0px;
 }

@@ -5,13 +5,21 @@
   <h3>最近收藏</h3>
   <hr>
   <ul class="list-group">
-  {% for url in user_urls %}
-  <li class="list-group-item">
-    <a href="{{ url.url_info.url }}">{% if url.name %}{{ url.name }}{% else %}{{ url.url_info.url }}{% endif %}</a>
-  <span class="small">{{ url.last_update_time }}</span>
-  </li>
-  {% endfor %}
+    {% for url in user_urls %}
+      <li class="list-group-item">
+        <a href="{{ url.url_info.url }}">{% if url.name %}{{ url.name }}{% else %}{{ url.url_info.url }}{% endif %}</a>
+        <span class="small">{{ url.last_update_time }}</span>
+      </li>
+    {% endfor %}
 
   </ul>
+  <div style="text-align: center">
+    <ul class="pagination margin-top-down-0">
+      {% for page in page_info %}
+        <li class="{% if page.2 %}active{% endif %}"><a href="{{ page.1 }}">{{ page.0 }}</a></li>
+      {% endfor %}
+      <li><a href="#">共{{ count }}条</a></li>
+    </ul>
+  </div>
 
 {% endblock %}
