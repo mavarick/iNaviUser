@@ -20,6 +20,7 @@
   </div>
 
   <div class="container">
+    <a href="{% url 'user:update_figure' user.username %}">修改头像</a>
     <a href="{% url 'user:update_bio' user.username %}">修改简介</a>
     <a href="{% url 'user:update_skills' user.username %}">修改技能</a>
     <a href="{% url 'user:update_interests' user.username %}">修改关注领域</a>

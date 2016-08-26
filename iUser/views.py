@@ -148,6 +148,21 @@ def main(request, username):
                                            "site_tree": site_tree, "user_recent_urls":user_recent_urls})
 
 
+def update_figure(request, username):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse("user:login"))
+
+    user = request.user
+    username = user.username
+    if request.method == "POST":
+        new_bio = request.POST.get("bio", "")
+        user_info_api.update_bio(username, new_bio)
+        return HttpResponseRedirect(reverse("user:info", args=(username, )))
+    template_file = "iUser/update_figure.html"
+    user_info = user_info_api.get_info(username)
+    return render(request, template_file, {"user_info": user_info})
+
+
 def update_bio(request, username):
     if not request.user.is_authenticated():
         return HttpResponseRedirect(reverse("user:login"))
