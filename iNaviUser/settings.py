@@ -145,7 +145,7 @@ if not online:
     UPLOAD_AVATAR_AVATAR_ROOT = os.path.join(BASE_DIR, 'static/avatar/')
 else:
     UPLOAD_AVATAR_UPLOAD_ROOT = "/var/www/iNaviUser/static/image/"
-    UPLOAD_AVATAR_AVATAR_ROOT = "/var/www/iNaviUser/static/avator/"
+    UPLOAD_AVATAR_AVATAR_ROOT = "/var/www/iNaviUser/static/avatar/"
 
 UPLOAD_AVATAR_URL_PREFIX_ORIGINAL = '/static/image/'
 UPLOAD_AVATAR_URL_PREFIX_CROPPED = '/static/avatar/'
