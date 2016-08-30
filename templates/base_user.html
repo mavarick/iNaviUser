@@ -11,7 +11,7 @@
             {#              登录信息#}
             {% if user.is_authenticated %}
               <div class="user-logo">
-                <img class="img-circle" src="/static/images/user/1.jpg" width="80px">
+                <img class="img-circle" src="{{ user_info.user_avatar }}" width="80px">
                 <h3>{{ user_info.username }}</h3>
                 <p>{{ user_info.bio }}</p>
               </div>

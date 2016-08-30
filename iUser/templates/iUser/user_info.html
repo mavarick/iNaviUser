@@ -12,7 +12,7 @@
   </script>
 
   <div class="jumbotron" id="user-info-header">
-      <img class="img-circle" src="/static/images/user/1.jpg" width="100px">
+      <img class="img-circle" src="{{ user_info.user_avatar }}" width="100px">
       <h2>{{ user_info.username }}</h2>
       <p class="bio">{{ user_info.bio }}</p>
       <p class="tags">擅长:{% for sk in user_info.user_skills %}#{{ sk.name }} {% endfor %}</p>
@@ -20,7 +20,7 @@
   </div>
 
   <div class="container">
-    <a href="{% url 'user:update_figure' user.username %}">修改头像</a>
+    <a href="{% url 'user:update_avatar' user.username %}">修改头像</a>
     <a href="{% url 'user:update_bio' user.username %}">修改简介</a>
     <a href="{% url 'user:update_skills' user.username %}">修改技能</a>
     <a href="{% url 'user:update_interests' user.username %}">修改关注领域</a>

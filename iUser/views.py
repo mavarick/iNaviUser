@@ -1,8 +1,8 @@
 # encoding:utf8
 # Create your views here.
+import os
 
-
-from django.shortcuts import render, render_to_response, get_object_or_404
+from django.shortcuts import render, render_to_response, get_object_or_404, RequestContext
 from django.utils import timezone
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -148,19 +148,19 @@ def main(request, username):
                                            "site_tree": site_tree, "user_recent_urls":user_recent_urls})
 
 
-def update_figure(request, username):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect(reverse("user:login"))
-
-    user = request.user
-    username = user.username
-    if request.method == "POST":
-        new_bio = request.POST.get("bio", "")
-        user_info_api.update_bio(username, new_bio)
-        return HttpResponseRedirect(reverse("user:info", args=(username, )))
-    template_file = "iUser/update_figure.html"
-    user_info = user_info_api.get_info(username)
-    return render(request, template_file, {"user_info": user_info})
+# def update_figure(request, username):
+#     if not request.user.is_authenticated():
+#         return HttpResponseRedirect(reverse("user:login"))
+#
+#     user = request.user
+#     username = user.username
+#     if request.method == "POST":
+#         new_bio = request.POST.get("bio", "")
+#         user_info_api.update_bio(username, new_bio)
+#         return HttpResponseRedirect(reverse("user:info", args=(username, )))
+#     template_file = "iUser/update_figure.html"
+#     user_info = user_info_api.get_info(username)
+#     return render(request, template_file, {"user_info": user_info})
 
 
 def update_bio(request, username):
@@ -210,5 +210,56 @@ def update_interests(request, username):
     user_info = user_info_api.get_info(username)
     interests = ','.join([t['name'] for t in user_info['user_interests']])
     return render(request, template_file, {"user_info": user_info, "interests": interests})
+
+
+from upload_avatar.app_settings import (
+    UPLOAD_AVATAR_UPLOAD_ROOT,
+    UPLOAD_AVATAR_AVATAR_ROOT,
+    UPLOAD_AVATAR_RESIZE_SIZE,
+)
+
+
+from upload_avatar import get_uploadavatar_context
+from .models import UserAvatar
+
+
+#########################
+# In production, you don't need this,
+# static files should serve by web server, e.g. Nginx
+
+def find_mimetype(filename):
+    """In production, you don't need this,
+    Static files should serve by web server, e.g. Nginx.
+    """
+    if filename.endswith(('.jpg', '.jpep')):
+        return 'image/jpeg'
+    if filename.endswith('.png'):
+        return 'image/png'
+    if filename.endswith('.gif'):
+        return 'image/gif'
+    return 'application/octet-stream'
+
+
+def get_upload_images(request, filename):
+    mimetype = find_mimetype(filename)
+    with open(os.path.join(UPLOAD_AVATAR_UPLOAD_ROOT, filename), 'r') as f:
+        #return HttpResponse(f.read(), mimetype=mimetype)
+        return HttpResponse(f.read(), content_type=mimetype)
+
+
+def get_avatar(request, filename):
+    mimetype = find_mimetype(filename)
+    with open(os.path.join(UPLOAD_AVATAR_AVATAR_ROOT, filename), 'r') as f:
+        #return HttpResponse(f.read(), mimetype=mimetype)
+        return HttpResponse(f.read(), content_type=mimetype)
+
+# print "got here 11111>>>>>>>>>>>>>>>"
+@login_required(login_url="/user/login/")
+def update_figure(request, username):
+    return render_to_response(
+        'iUser/upload_avatar.html',
+        get_uploadavatar_context(),
+        context_instance=RequestContext(request)
+    )
 
 

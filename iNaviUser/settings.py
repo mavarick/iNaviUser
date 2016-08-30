@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'iUserTag',
     'iUser',
 
+    'upload_avatar',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -133,5 +135,11 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+    # os.path.join(BASE_DIR, 'image'),
     #os.path.join(BASE_DIR, 'iNaviSec/static'),
 )
+
+UPLOAD_AVATAR_UPLOAD_ROOT = os.path.join(BASE_DIR, 'static/image/')
+UPLOAD_AVATAR_AVATAR_ROOT = os.path.join(BASE_DIR, 'static/avatar/')
+UPLOAD_AVATAR_URL_PREFIX_ORIGINAL = '/static/image/'
+UPLOAD_AVATAR_URL_PREFIX_CROPPED = '/static/avatar/'

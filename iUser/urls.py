@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from views import main, login, register, logout, page_info, drop_user, update_bio, \
-    update_skills, update_interests, update_figure
+    update_skills, update_interests, update_figure, update_figure
 
 from views_topic import show_topic, show_topics, update_topic, delete_topic, add_topic
 from views_api import api_get_cate_topics, api_get_head
@@ -35,7 +35,8 @@ urlpatterns = [
     url(r'^(?P<username>\w+)/update_bio/?$', update_bio, name="update_bio"),
     url(r'^(?P<username>\w+)/update_skills/?$', update_skills, name="update_skills"),
     url(r'^(?P<username>\w+)/update_interests/?$', update_interests, name="update_interests"),
-    url(r'^(?P<username>\w+)/update_figure/?$', update_figure, name="update_figure"),
+    # url(r'^(?P<username>\w+)/update_figure/?$', update_figure, name="update_figure"),
+    url(r'^(?P<username>\w+)/upload_avatar/?$', update_figure, name="update_avatar"),
 
     url(r'^(?P<username>\w+)/topic/(?P<topic_id>\d+)/?$', show_topic, name="show_topic"),
     # 这个地方用 show_topics 来跳转,防止每次都要取出用户的root_id

@@ -19,5 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^user/', include("iUser.urls", namespace="user")),
+    url(r'^avatar/', include("upload_avatar.urls", namespace="avatar")),
     url(r'^/?', include("index.urls", namespace="index")),
 ]

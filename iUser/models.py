@@ -1,5 +1,6 @@
 # encoding:utf8
 from __future__ import unicode_literals
+import os
 
 from django.db import models
 
@@ -72,6 +73,36 @@ class UserInterest(models.Model):
         return dict(id=id, username=username, name=name)
 
 
+from upload_avatar.signals import avatar_crop_done
+from upload_avatar.models import UploadAvatarMixIn
+
+
+class UserAvatar(models.Model, UploadAvatarMixIn):
+    # user = models.ForeignKey('auth.User', related_name='user_info')
+    # user = models.ForeignKey('auth.User', related_name='user_info')
+    username = models.CharField(max_length=255, primary_key=True)
+    avatar_name = models.CharField(max_length=128)
+
+    status = models.IntegerField(default=0)
+    last_update_time = models.DateTimeField(null=True, blank=True, auto_now=True)
+    create_time = models.DateTimeField(auto_now_add=True)
+
+    def get_uid(self):
+        return self.username
+
+    def get_avatar_name(self, size):
+        return UploadAvatarMixIn.build_avatar_name(self, self.avatar_name, size)
+
+
+def save_avatar_in_db(sender, username, avatar_name, **kwargs):
+    if UserAvatar.objects.filter(username=username).exists():
+        UserAvatar.objects.filter(username=username).update(avatar_name=avatar_name)
+    else:
+        UserAvatar.objects.create(username=username, avatar_name=avatar_name)
+
+avatar_crop_done.connect(save_avatar_in_db)
+
+
 class UserInfoApi(object):
 
     def __init__(self, UserInfo, UserSkill, UserInterest):
@@ -107,9 +138,16 @@ class UserInfoApi(object):
         user_skills = [t.get_info() for t in user_skill_objs]
         user_interest_objs = self.user_interest.objects.filter(username=username)
         user_interests = [t.get_info() for t in user_interest_objs]
+        try:
+            user_avatar_obj = UserAvatar.objects.get(username=username)
+            user_avatar_url = user_avatar_obj.get_avatar_url()
+            print user_avatar_url
+        except Exception, ex:
+            user_avatar_url = '/static/avatar/default.jpg'
 
         user_info['user_skills'] = user_skills
         user_info['user_interests'] = user_interests
+        user_info['user_avatar'] = user_avatar_url
         return user_info
 
     def update_user_info(self, username, bio=None, skills=[], interests=[]):
