@@ -205,7 +205,7 @@ class CategoryApi(object):
         return
 
     def delete_user(self, username):
-        result = self.model.objects.filter(username=username).all().delete()
+        # result = self.model.objects.filter(username=username).all().delete()
         result = self.user_base_model.objects.filter(username=username).all().delete()
         return result
 
@@ -217,7 +217,7 @@ class CategoryApi(object):
         fp = open(file_path, 'w')
         pickle.dump(dict_rows, fp)
         # print >>fp, json.dumps(dict_rows)
-        print "dump to file:[{0}], num:[{1}]".format(file_path, num)
+        print("dump to file:[{0}], num:[{1}]".format(file_path, num))
 
     #deprecated
     def load_from_txt(self, file_path):
@@ -233,9 +233,9 @@ class CategoryApi(object):
                 num['created'] +=1
             else:
                 num['existed'] +=1
-        print "load from file: [{0}], total line: [{1}], existd: [{2}], created: [{3}]".format(
+        print("load from file: [{0}], total line: [{1}], existd: [{2}], created: [{3}]".format(
             file_path, num['existed']+num['created'], num['existed'], num['created']
-        )
+        ))
 
 
 

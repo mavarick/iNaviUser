@@ -18,14 +18,16 @@ def wrap_pages(path, cnt, size, cur, span=10):
     if sp < 1:
         offset = 1 - sp
         sp = 1
-    ep = offset + ep
+    ep += offset - 1
     if ep > max_page: ep = max_page
-    pages = xrange(sp, ep)
+    pages = range(sp, ep+1)
 
     # add the first
     cur_flag = 0
-    if pages[0] != 1:
-        tags.append(("第一页", path%1, cur_flag))
+    if not pages or pages[0] != 1:
+        tags.append(("1", path%1, cur_flag))
+    if len(pages) > 1 and pages[1] != 2:
+        tags.append(("...", "", 1))
     for page in pages:
         cur_flag = 0
         if page == cur:
@@ -33,7 +35,10 @@ def wrap_pages(path, cnt, size, cur, span=10):
         tags.append((page, path%page, cur_flag))
     # add the end
     cur_flag = 0
-    if pages[-1] != max_page:
-        tags.append(('...', "#", cur_flag))
+
+    if pages and pages[-1] != max_page:
+        if pages[-1] + 1 != max_page:
+            tags.append(('...', "", 1))
         tags.append((max_page, path%max_page, cur_flag))
+    tags.append(("共%s条"%cnt, "", 1))
     return tags
